@@ -1,0 +1,29 @@
+
+## this is coupon bond where payout is at maturity as well as annually
+
+class coupon_bond:
+    def __init__(self,principal,rate,maturity,interest_rate):
+        self.principal = principal
+        self.rate = rate/100
+        self.maturity = maturity
+        self.interest_rate = interest_rate
+    def present(self,x,n):
+        return x/(1+self.rate)**n
+    def price(self):
+        #discount the coupon payments
+        p = 0
+        for t in (1,self.maturity+1):
+            p = p + self.present(self.principal*self.rate,t)
+        #discount principal amount
+        p = p + self.present(self.principal,self.maturity)
+        return p
+
+
+pp = int(input("Enter the principal amount "))
+rr = float(input("Enter the rate of interest "))
+mm = int(input("Enter the maturity amount "))
+iirr = float(input("Enter market related interest rate "))
+
+bond = coupon_bond(pp, rr, mm, iirr)
+print(bond.present(pp,mm))
+print(bond.price())
